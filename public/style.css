@@ -1,0 +1,351 @@
+/* 基本設定：フォントと背景 */
+body {
+  font-family:
+    "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+    Meiryo, sans-serif;
+  background-color: #f0f4f8; /* 薄いグレーブルーで目に優しく */
+  color: #333;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 画面中央に配置 */
+}
+
+/* ログイン画面 */
+.register-body {
+  font-family:
+    "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+    Meiryo, sans-serif;
+  background-color: #f0f4f8; /* 薄いグレーブルーで目に優しく */
+  color: #333;
+  margin: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 画面中央に配置 */
+}
+
+/* コンテナ：カード風のデザイン */
+.container {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* 柔らかな影 */
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+/* 見出し */
+h1 {
+  color: #2c5282; /* 落ち着いた紺色 */
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #718096;
+  margin-bottom: 30px;
+}
+
+/* ボタンの共通スタイル */
+.btn {
+  display: block;
+  text-decoration: none;
+  padding: 14px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+/* ログインボタン（メインアクション） */
+a.btn[href="/login"] {
+  background-color: #4299e1; /* 信頼感のある青 */
+  color: white;
+}
+
+a.btn[href="/login"]:hover {
+  background-color: #3182ce;
+  transform: translateY(-2px); /* 少し浮き上がる演出 */
+}
+
+/* 新規登録ボタン（サブアクション） */
+a.btn[href="/register"] {
+  background-color: #edf2f7;
+  color: #4a5568;
+  border: 1px solid #cbd5e0;
+}
+
+a.btn[href="/register"]:hover {
+  background-color: #e2e8f0;
+}
+
+/* エラーメッセージのスタイル：赤文字＆赤枠 */
+.errors {
+  background-color: #fff5f5; /* 非常に薄い赤背景 */
+  border: 2px solid #e53e3e; /* はっきりした赤枠 */
+  border-radius: 8px;
+  color: #c53030; /* 濃い赤文字 */
+  list-style: none;
+  padding: 15px 20px;
+  margin: 0 auto 25px auto;
+  width: 90%;
+  max-width: 500px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.errors li {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.errors li::before {
+  content: "⚠️ "; /* 警告アイコンを付与 */
+}
+
+/* フォームのレイアウト */
+form {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* 項目ラベル（pタグをラベル風に） */
+form p {
+  text-align: left;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin: 15px 0 5px 0;
+  color: #4a5568;
+}
+
+/* 入力フィールドの共通スタイル */
+input[type="text"],
+input[type="number"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box; /* paddingが幅を追い越さないように */
+  background-color: #f7fafc;
+  transition: border-color 0.2s;
+}
+
+/* フォーカス時の色 */
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #4299e1;
+  background-color: #fff;
+}
+
+/* 送信ボタン */
+input[type="submit"] {
+  width: 100%;
+  background-color: #48bb78; /* 登録・ログインは「進む」イメージの緑 */
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: background 0.3s;
+}
+
+input[type="submit"]:hover {
+  background-color: #38a169;
+}
+
+/* 連絡帳表示画面 */
+.dashboard-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* コンテンツを中央揃え */
+  padding: 20px;
+  margin: 10rem;
+  background-color: #f0f4f8;
+  min-height: 100vh;
+}
+
+.dashboard-body h1 {
+  color: #2d3748;
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+
+/* 日付選択セクション */
+.calendar-section {
+  background: #fff;
+  padding: 15px 25px;
+  border-radius: 50px; /* 丸みのあるデザイン */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-section input[type="date"] {
+  padding: 8px;
+  border: 1px solid #cbd5e0;
+  border-radius: 5px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.dashboard-body form {
+  width: 100%;
+  max-width: 600px; /* 少し広めに設定 */
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.dashboard-body form p {
+  font-weight: bold;
+  color: #4a5568;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* テキストボックスの拡大 */
+textarea {
+  width: 100%;
+  height: 200px; /* 高さをしっかり確保 */
+  padding: 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: vertical; /* 縦方向のみリサイズ可能 */
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  background-color: #fcfdfd;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #4299e1;
+  background-color: #fff;
+}
+
+/* 連絡一覧セクション */
+.contact-list {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.contact-list h2 {
+  font-size: 1.2rem;
+  color: #2c5282;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #cbd5e0;
+  padding-bottom: 10px;
+}
+
+/* 個別の連絡事項ログ */
+.log-item {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  text-align: left; /* 文章は左揃えが読みやすい */
+  border-left: 5px solid #4299e1; /* アクセントの左線 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  height: auto;
+}
+
+.log-item strong {
+  display: block;
+  color: #2d3748;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.log-item p {
+  margin: 0;
+  color: #4a5568;
+  white-space: pre-wrap; /* 改行を反映させる */
+}
+
+/* ボタンを右下に追い込むための設定 */
+.button-container {
+  margin-top: 5px;
+}
+
+/* ボタンの親要素を「右寄せ」のレイアウトにする */
+.status-area {
+  display: flex; /* フレックスボックス化 */
+  justify-content: flex-end; /* 中身を右端に寄せる */
+  align-items: center; /* 上下中央（必要であれば） */
+  width: 100%; /* 横幅いっぱい使う */
+}
+
+/* 確認ボタン自体のデザイン */
+.stamp-btn {
+  background: none; /* 背景を透明に */
+  border: none; /* ★枠線をなくす */
+  outline: none; /* クリック時の青い枠も消す */
+  padding: 5px 0; /* 少しだけクリックしやすく上下に余白 */
+  color: #007bff; /* 文字の色（お好みで変えてください） */
+  cursor: pointer; /* マウスを乗せた時に指マークにする */
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* マウスを乗せた時に少し色を変えて「押せる」ことを伝える（親切設計） */
+.stamp-btn:hover {
+  color: #0056b3;
+  text-decoration: underline; /* 枠がない代わりに下線を出すなど */
+}
+
+/* 取消ボタンのデザイン */
+.cancel-btn {
+  background: none;
+  border: none;
+  color: #999; /* 少し薄めのグレー */
+  cursor: pointer;
+  font-size: 12px; /* 少し小さく */
+  padding: 0;
+  text-decoration: underline; /* リンクっぽく下線 */
+}
+
+.cancel-btn:hover {
+  color: #e44d26; /* ホバー時は警告っぽく赤っぽく */
+}
+
+/* ログアウトボタン */
+a[href="/logout"] {
+  display: inline-block;
+  margin-top: 40px;
+  color: #e53e3e;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border: 1px solid #feb2b2;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+
+a[href="/logout"]:hover {
+  background-color: #fff5f5;
+  border-color: #e53e3e;
+}

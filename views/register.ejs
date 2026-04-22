@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>新規登録 - 連絡帳アプリ</title>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body class="register-body">
+    <% if (errors.length > 0) { %>
+      <ul class="errors">
+        <% errors.forEach(error => { %>
+          <li><%= error %></li>
+        <% }); %>
+      </ul>
+    <% } %>
+
+    <form action="/register" method="POST">
+      <h2>新規アカウント登録</h2> 
+      <p>学年</p>
+      <input type="number" name="grade" placeholder="例: 2" />
+
+      <p>クラス<small>(学年主任は0を入力)</small></p>
+      <input type="number" name="cls" placeholder="例: 3" />
+
+      <p>出席番号<small>(担任・学年主任は0を入力)</small></p>
+      <input type="number" name="number" placeholder="例: 15" />
+
+      <p>氏名</p>
+      <input type="text" name="name" placeholder="山田 太郎" />
+
+      <p>役職</p>
+      <select name="role">
+        <option value="生徒">生徒</option>
+        <option value="担任">担任</option>
+        <option value="学年主任">学年主任</option>
+      </select>
+
+      <p>ユーザーID <small>(半角英数字・記号)</small></p>
+      <input type="text" name="user_id" />
+
+      <p>パスワード <small>(20文字以内)</small></p>
+      <input type="password" name="password" />
+
+      <input type="submit" value="新規登録" />
+      
+      <p style="text-align: center; margin-top: 20px;">
+        <a href="/" style="color: #718096; text-decoration: none; font-size: 0.8rem;">トップへ戻る</a>
+      </p>
+    </form>
+  </body>
+</html>

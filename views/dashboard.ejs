@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>連絡帳アプリ</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="dashboard-body">
+  <h1>こんにちは、<%= user.name %> さん</h1>
+
+  <div class="calendar-section">
+    <label>日付を選択：</label>
+    <input type="date" value="<%= targetDate %>" onchange="location.href='/dashboard?date=' + this.value">
+  </div>
+
+  <% if (user.role === '生徒') { %>
+    <% if(isToday){ %>
+      <form action="/save-contact" method="POST">
+        <p>今日の連絡事項を入力してください</p>
+        <textarea name="content"></textarea>
+        <input type="submit" value="保存する">
+      </form>
+    <% } %>
+  <% } %>
+
+  <div class="contact-list">
+    <h2><%= targetDate %> の連絡一覧</h2>
+    <% if (logs.length > 0) { %>
+      <% if(user.role === '学年主任') { %>
+          <!-- 学年主任は生徒の学年・クラスも参照できる -->
+          <% logs.forEach(log => { %>
+              <div class="log-item">
+                  <strong><%= log.grade %>年<%= log.cls %>組 <%= log.name %> さん:</strong>
+                  <p><%= log.content %></p>
+              </div>
+          <% }) %>
+      <% } else { %>
+        <!-- 生徒・担任は生徒名だけ参照可能 -->
+        <% logs.forEach(log => { %>
+          <div class="log-item">
+            <strong><%= log.name %> さん:</strong>
+            <p class="message-content"><%= log.content %></p>
+
+            <div class="status-area">
+              <% if (log.is_read) { %>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span style="color: orange; font-weight: bold;">[済] 💮 担任が確認しました</span>
+                  
+                  <% if (user.role === "担任") { %>
+                    <form action="/unread-contact/<%= log.id %>" method="POST" style="margin: 0;">
+                      <button type="submit" class="cancel-btn">（取消）</button>
+                    </form>
+                  <% } %>
+                </div>
+
+              <% } else if (user.role === "担任") { %>
+                <div class="button-container">
+                <form action="/read-contact/<%= log.id %>" method="POST">
+                  <button type="submit" class="stamp-btn">確認（いいね！）</button>
+                </form>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        <% }) %>  
+      <% } %>
+    <% } else { %>
+        <p>連絡事項はありません。</p>
+    <% } %>
+  </div>
+
+  <p><a href="/logout">ログアウト</a></p>
+</body>
+</html>
