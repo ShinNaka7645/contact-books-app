@@ -4,12 +4,30 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 const app = express();
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Shingovvaren8823",
-  database: "school_list",
-});
+// const connection = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "Shingovvaren8823",
+//   database: "school_list",
+// });
+
+// JawsDBのURL、またはローカルの設定
+const dbUri = process.env.JAWSDB_URL;
+
+let connection;
+
+if (dbUri) {
+  // 本番環境（JawsDB）
+  connection = mysql.createConnection(dbUri);
+} else {
+  // ローカル環境
+  connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "Shingovvaren8823",
+    database: "school_list",
+  });
+}
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
