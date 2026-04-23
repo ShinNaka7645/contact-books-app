@@ -231,6 +231,10 @@ app.post(
       errors.push("新しいパスワードが未入力です。");
     }
 
+    if (new_password.length > 20) {
+      errors.push("パスワードが20文字を超えています。");
+    }
+
     if (errors.length > 0) {
       res.render("reset-password.ejs", { errors: errors });
     } else {
