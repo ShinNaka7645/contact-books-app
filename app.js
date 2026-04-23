@@ -4,13 +4,6 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 const app = express();
 
-// const connection = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "Shingovvaren8823",
-//   database: "school_list",
-// });
-
 // JawsDBのURL、またはローカルの設定
 const dbUri = process.env.JAWSDB_URL;
 
