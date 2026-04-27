@@ -17,7 +17,23 @@
   <% if (user.role === '生徒') { %>
     <% if(isToday){ %>
       <form action="/save-contact" method="POST">
-        <p>今日の連絡事項を入力してください</p>
+        <p>体調</p>
+        <select name="condition">
+          <option>1: 悪い</option>
+          <option>2: やや悪い</option>
+          <option selected>3: ふつう</option> <!-- デフォルトで選択される -->
+          <option>4: 良い</option>
+          <option>5: とても良い</option>
+        </select>
+        <p>メンタル</p>
+        <select name="mental">
+          <option>1: 悪い</option>
+          <option>2: やや悪い</option>
+          <option selected>3: ふつう</option> <!-- デフォルトで選択される -->
+          <option>4: 良い</option>
+          <option>5: とても良い</option>
+        </select>
+        <p>今日の振り返り・相談内容</p>
         <textarea name="content"></textarea>
         <input type="submit" value="保存する">
       </form>
