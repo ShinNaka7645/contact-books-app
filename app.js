@@ -325,19 +325,19 @@ app.get("/dashboard", (req, res) => {
 
 // ② 連絡帳の保存（当日のみ）
 app.post("/save-contact", (req, res) => {
-  const condtion = req.body.condtion;
+  const condition = req.body.condition;
   const mental = req.body.mental;
   const content = req.body.content;
   const today = new Date().toISOString().split("T")[0];
   connection.query(
-    "INSERT INTO contact_books (user_id, date, name, grade, cls, condtion, mental, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE content = ?",
+    "INSERT INTO contact_books (user_id, date, name, grade, cls, condition, mental, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE content = ?",
     [
       req.session.user.id,
       today,
       req.session.user.name,
       req.session.user.grade,
       req.session.user.cls,
-      condtion,
+      condition,
       mental,
       content,
       content,
