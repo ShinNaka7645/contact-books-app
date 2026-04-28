@@ -5,11 +5,10 @@ body {
     Meiryo, sans-serif;
   background-color: #f0f4f8; /* 薄いグレーブルーで目に優しく */
   color: #333;
-  margin: 10px;
+  margin: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh; /* 画面中央に配置 */
+  min-height: 100vh; /* 最低限画面いっぱいの高さは確保しつつ、中身が増えたら伸びるようにする */
 }
 
 /* ログイン画面 */
@@ -19,11 +18,11 @@ body {
     Meiryo, sans-serif;
   background-color: #f0f4f8; /* 薄いグレーブルーで目に優しく */
   color: #333;
-  margin: 10rem;
+  margin: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh; /* 画面中央に配置 */
+  padding: 40px 0; /* 上下に余白を持たせる */
+  min-height: 100vh;
 }
 
 /* コンテナ：カード風のデザイン */
@@ -175,8 +174,8 @@ input[type="submit"]:hover {
   display: flex;
   flex-direction: column;
   align-items: center; /* コンテンツを中央揃え */
-  padding: 20px;
-  margin: 20rem;
+  padding: 40px 20px;
+  margin: 0;
   background-color: #f0f4f8;
   min-height: 100vh;
 }
@@ -336,8 +335,8 @@ textarea:focus {
   display: flex;
   flex-direction: column;
   align-items: center; /* コンテンツを中央揃え */
-  padding: 20px;
-  margin: 20rem;
+  padding: 40px 20px;
+  margin: 0;
   background-color: #f0f4f8;
   min-height: 100vh;
 }
