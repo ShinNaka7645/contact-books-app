@@ -331,6 +331,40 @@ textarea:focus {
   color: #e44d26; /* ホバー時は警告っぽく赤っぽく */
 }
 
+/* 履歴表示画面 */
+.history-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* コンテンツを中央揃え */
+  padding: 20px;
+  margin: 20rem;
+  background-color: #f0f4f8;
+  min-height: 100vh;
+}
+
+.history-body h1 {
+  color: #2d3748;
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+
+.history-body form {
+  width: 100%;
+  max-width: 600px; /* 少し広めに設定 */
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.history-body form p {
+  font-weight: bold;
+  color: #4a5568;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 /* ログアウトボタン */
 a[href="/logout"] {
   display: inline-block;

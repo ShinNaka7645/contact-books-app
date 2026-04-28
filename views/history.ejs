@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>履歴一覧 - 連絡帳アプリ</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="history-body">
+  <h2>連絡帳履歴</h2>
+  <% if(user.role !== "生徒" ) { %>
+    <% if(student_names.length > 0) { %>
+      <p>生徒名で検索</p>
+      <form action="/get-history" method="post">
+        <select name="student-name">
+          <% student_names.forEach(student_name =>{ %>
+            <option><%= student_name %></option>
+          <% }) %>
+        </select>
+        <button type="submit">検索</button>
+      </form>
+    <% } %>
+  <% } %>
+
+  <% if(logs.length > 0) { %>
+    <% logs.forEach(log => { %>
+      <div class="log-item">
+        <strong>【<%= log.grade %>年<%= log.cls %>組 <%= log.name %> さん】</strong>
+        <p><strong>◎ 体調:</strong> <%= log.health %></p>
+        <p><strong>◎ メンタル:</strong> <%= log.mental %></p>
+        <strong>◎ 今日の振り返り・相談内容</strong>
+        <p><%= log.content %></p>
+      </div>
+    <% }) %>
+  <% } %>
+</body>
+</html>

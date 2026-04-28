@@ -273,7 +273,7 @@ app.post(
           });
         } else {
           errors.push("ユーザーIDが存在しません。");
-          res.render("login.ejs", { errors: errors });
+          res.render("reset-password.ejs", { errors: errors });
         }
       },
     );
@@ -281,7 +281,6 @@ app.post(
 );
 
 // 連絡帳の表示画面
-
 app.get("/dashboard", (req, res) => {
   // 1. ログインチェック
   if (!res.locals.user) return res.redirect("/login");
@@ -398,6 +397,65 @@ app.post("/unread-contact/:id", (req, res) => {
       res.redirect("/dashboard");
     },
   );
+});
+
+// 連絡帳の履歴一覧
+app.get("/history", (req, res) => {
+  // 1. ログインチェック
+  if (!res.locals.user) return res.redirect("/login");
+
+  const user = res.locals.user;
+
+  let sql = "";
+  let sql2 = "";
+  let params = [];
+
+  // 2. 役職に応じて命令文（SQL）を切り替える
+  if (user.role === "生徒") {
+    // 連絡帳の提出日が新しい順（idが降順）にデータを取得
+    sql2 = "SELECT * FROM contact_books WHERE user_id = ? ORDER BY id DESC";
+    params = [user.id];
+  } else if (user.role === "担任") {
+    // 生徒の名前を重複を削除して取得
+    sql = "SELECT DISTINCT name FROM contact_books WHERE grade = ? AND cls = ?";
+    // 連絡帳の提出日が新しい順（idが降順）にデータを取得
+    sql2 =
+      "SELECT * FROM contact_books WHERE grade = ? AND cls = ? ORDER BY id DESC";
+    params = [user.grade, user.cls];
+  } else if (user.role === "学年主任") {
+    // 生徒の名前を重複を削除して取得
+    sql = "SELECT DISTINCT name FROM contact_books WHERE grade = ?";
+    // 連絡帳の提出日が新しい順（idが降順）にデータを取得
+    sql2 = "SELECT * FROM contact_books WHERE grade = ? ORDER BY id DESC";
+    params = [user.grade];
+  }
+
+  // 3. connection.query を使って実行
+  const student_names = [];
+  if (user.role !== "生徒") {
+    connection.query(sql, params, (err, results) => {
+      if (err) {
+        console.error("データ取得エラー:", err);
+        return res.status(500).send("エラーが発生しました");
+      }
+
+      // 重複なしの生徒名を配列で取得
+      student_names = results;
+    });
+  }
+
+  connection.query(sql2, params, (err, results) => {
+    if (err) {
+      console.error("データ取得エラー:", err);
+      return res.status(500).send("エラーが発生しました");
+    }
+
+    // results には検索で見つかった「行」が配列として入っています
+    res.render("history.ejs", {
+      student_names: student_names,
+      logs: results,
+    });
+  });
 });
 
 // ログアウト処理
