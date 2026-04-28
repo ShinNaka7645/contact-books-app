@@ -330,7 +330,7 @@ app.post("/save-contact", (req, res) => {
   const content = req.body.content;
   const today = new Date().toISOString().split("T")[0];
   connection.query(
-    "INSERT INTO contact_books (user_id, date, name, grade, cls, health, mental, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE content = ?",
+    "INSERT INTO contact_books (user_id, date, name, grade, cls, health, mental, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE health = ?, mental = ?, content = ?",
     [
       req.session.user.id,
       today,
@@ -340,6 +340,8 @@ app.post("/save-contact", (req, res) => {
       health,
       mental,
       content,
+      health,
+      mental,
       content,
     ],
   );
