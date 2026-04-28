@@ -47,15 +47,21 @@
           <!-- 学年主任は生徒の学年・クラスも参照できる -->
           <% logs.forEach(log => { %>
               <div class="log-item">
-                  <strong><%= log.grade %>年<%= log.cls %>組 <%= log.name %> さん:</strong>
-                  <p><%= log.content %></p>
+                <strong>【<%= log.grade %>年<%= log.cls %>組 <%= log.name %> さん】</strong>
+                <p><strong>◎ 体調:</strong> <%= log.health %></p>
+                <p><strong>◎ メンタル:</strong> <%= log.mental %></p>
+                <strong>◎ 今日の振り返り・相談内容</strong>
+                <p><%= log.content %></p>
               </div>
           <% }) %>
       <% } else { %>
         <!-- 生徒・担任は生徒名だけ参照可能 -->
         <% logs.forEach(log => { %>
           <div class="log-item">
-            <strong><%= log.name %> さん:</strong>
+            <strong>【<%= log.name %> さん】</strong>
+            <p><strong>◎ 体調:</strong> <%= log.health %></p>
+            <p><strong>◎ メンタル:</strong> <%= log.mental %></p>
+            <strong>◎ 今日の振り返り・相談内容</strong>
             <p class="message-content"><%= log.content %></p>
 
             <div class="status-area">
