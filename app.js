@@ -431,31 +431,31 @@ app.get("/history", (req, res) => {
   }
 
   // 3. connection.query を使って実行
-  const student_names = [];
+  // fetchLogs関数を宣言し、生徒名を取得し終わってから履歴を取得する
+  const fetchLogs = (names) => {
+    connection.query(sql2, params, (err, logs) => {
+      if (err) {
+        console.error("データ取得エラー:", err);
+        return res.status(500).send("エラーが発生しました");
+      }
+      res.render("history.ejs", {
+        student_names: names,
+        logs: logs,
+      });
+    });
+  };
+
   if (user.role !== "生徒") {
     connection.query(sql, params, (err, results) => {
       if (err) {
         console.error("データ取得エラー:", err);
         return res.status(500).send("エラーが発生しました");
       }
-
-      // 重複なしの生徒名を配列で取得
-      student_names = results;
+      fetchLogs(results);
     });
+  } else {
+    fetchLogs([]);
   }
-
-  connection.query(sql2, params, (err, results) => {
-    if (err) {
-      console.error("データ取得エラー:", err);
-      return res.status(500).send("エラーが発生しました");
-    }
-
-    // results には検索で見つかった「行」が配列として入っています
-    res.render("history.ejs", {
-      student_names: student_names,
-      logs: results,
-    });
-  });
 });
 
 // 生徒名で検索して履歴を絞り込む
@@ -473,31 +473,32 @@ app.post("/get-history", (req, res) => {
     params = [user.grade];
   }
 
-  const student_names = [];
+  // 生徒名の取得が終わってから履歴を取得
+  const fetchLogs = (names) => {
+    connection.query(
+      "SELECT * FROM contact_books WHERE name = ? ORDER BY id DESC",
+      [req.body.studentName],
+      (err, logs) => {
+        if (err) {
+          console.error("データ取得エラー:", err);
+          return res.status(500).send("エラーが発生しました");
+        }
+        res.render("history.ejs", {
+          student_names: names,
+          logs: logs,
+        });
+      },
+    );
+  };
+
+  // 生徒名を重複を削除して取得
   connection.query(sql, params, (err, results) => {
     if (err) {
       console.error("データ取得エラー:", err);
       return res.status(500).send("エラーが発生しました");
     }
-
-    student_names = results;
+    fetchLogs(results);
   });
-
-  connection.query(
-    "SELECT * FROM contact_books WHERE name = ? ORDER BY id DESC",
-    [req.body.studentName],
-    (err, results) => {
-      if (err) {
-        console.error("データ取得エラー:", err);
-        return res.status(500).send("エラーが発生しました");
-      }
-
-      res.render("history.ejs", {
-        student_names: student_names,
-        logs: results,
-      });
-    },
-  );
 });
 
 // ログアウト処理
