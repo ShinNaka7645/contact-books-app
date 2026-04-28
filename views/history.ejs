@@ -10,11 +10,11 @@
   <h2>連絡帳履歴</h2>
   <% if(user.role !== "生徒" ) { %>
     <% if(student_names.length > 0) { %>
-      <p>生徒名で検索</p>
       <form action="/get-history" method="post">
+        <p>生徒名で検索</p>
         <select name="studentName">
-          <% student_names.forEach(student_name =>{ %>
-            <option><%= student_name %></option>
+          <% student_names.forEach(student =>{ %>
+            <option><%= student.name %></option>
           <% }) %>
         </select>
         <button type="submit">検索</button>

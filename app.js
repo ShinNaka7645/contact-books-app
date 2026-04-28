@@ -431,16 +431,16 @@ app.get("/history", (req, res) => {
   }
 
   // 3. connection.query を使って実行
-  // fetchLogs関数を宣言し、生徒名を取得し終わってから履歴を取得する
+  // fetchLogs でSQLを非同期処理
   const fetchLogs = (names) => {
-    connection.query(sql2, params, (err, logs) => {
+    connection.query(sql2, params, (err, results) => {
       if (err) {
         console.error("データ取得エラー:", err);
         return res.status(500).send("エラーが発生しました");
       }
       res.render("history.ejs", {
         student_names: names,
-        logs: logs,
+        logs: results,
       });
     });
   };
@@ -473,8 +473,16 @@ app.post("/get-history", (req, res) => {
     params = [user.grade];
   }
 
-  // 生徒名の取得が終わってから履歴を取得
-  const fetchLogs = (names) => {
+  // 生徒名を重複を削除して取得
+  connection.query(sql, params, (err, results) => {
+    if (err) {
+      console.error("データ取得エラー:", err);
+      return res.status(500).send("エラーが発生しました");
+    }
+
+    const student_names = results;
+
+    // 連絡帳を提出日が新しい順に取得
     connection.query(
       "SELECT * FROM contact_books WHERE name = ? ORDER BY id DESC",
       [req.body.studentName],
@@ -483,21 +491,13 @@ app.post("/get-history", (req, res) => {
           console.error("データ取得エラー:", err);
           return res.status(500).send("エラーが発生しました");
         }
+
         res.render("history.ejs", {
-          student_names: names,
+          student_names: student_names,
           logs: logs,
         });
       },
     );
-  };
-
-  // 生徒名を重複を削除して取得
-  connection.query(sql, params, (err, results) => {
-    if (err) {
-      console.error("データ取得エラー:", err);
-      return res.status(500).send("エラーが発生しました");
-    }
-    fetchLogs(results);
   });
 });
 
