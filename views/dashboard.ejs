@@ -48,7 +48,7 @@
 
   <div class="contact-list">
     <h2><%= targetDate %> の連絡一覧</h2>
-    <a href="/history" style="float: right;">連絡帳履歴一覧へ</a>
+    <a href="/history" style="float: right;">過去の提出履歴</a>
     <% if (logs.length > 0) { %>
       <% if(user.role === '学年主任') { %>
           <!-- 学年主任は生徒の学年・クラスも参照できる -->
