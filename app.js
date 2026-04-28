@@ -458,6 +458,48 @@ app.get("/history", (req, res) => {
   });
 });
 
+// 生徒名で検索して履歴を絞り込む
+app.post("/get-history", (req, res) => {
+  const user = res.locals.user;
+
+  let sql = "";
+  let params = [];
+
+  if (user.role === "担任") {
+    sql = "SELECT DISTINCT name FROM contact_books WHERE grade = ? AND cls = ?";
+    params = [user.grade, user.cls];
+  } else if (user.role === "学年主任") {
+    sql = "SELECT DISTINCT name FROM contact_books WHERE grade = ?";
+    params = [user.grade];
+  }
+
+  const student_names = [];
+  connection.query(sql, params, (err, results) => {
+    if (err) {
+      console.error("データ取得エラー:", err);
+      return res.status(500).send("エラーが発生しました");
+    }
+
+    student_names = results;
+  });
+
+  connection.query(
+    "SELECT * FROM contact_books WHERE name = ? ORDER BY id DESC",
+    [req.body.studentName],
+    (err, results) => {
+      if (err) {
+        console.error("データ取得エラー:", err);
+        return res.status(500).send("エラーが発生しました");
+      }
+
+      res.render("history.ejs", {
+        student_names: student_names,
+        logs: results,
+      });
+    },
+  );
+});
+
 // ログアウト処理
 app.get("/logout", (req, res) => {
   req.session.destroy((error) => {

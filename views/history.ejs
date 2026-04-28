@@ -12,7 +12,7 @@
     <% if(student_names.length > 0) { %>
       <p>生徒名で検索</p>
       <form action="/get-history" method="post">
-        <select name="student-name">
+        <select name="studentName">
           <% student_names.forEach(student_name =>{ %>
             <option><%= student_name %></option>
           <% }) %>
