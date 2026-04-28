@@ -18,7 +18,7 @@
               <option><%= student.name %></option>
             <% } else { %>
               <!-- 検索した生徒名がデフォルトで選択される -->
-              <option selected><%= logs[0].name %></option>
+              <option selected><%= student.name %></option>
             <% } %>
           <% }) %>
         </select>
@@ -28,7 +28,6 @@
   <% } %>
 
   <% if(logs.length > 0) { %>
-    <h2 style="text-decoration: underline;"><%= logs[0].name %>さんの連絡帳履歴</h2>
     <% logs.forEach(log => { %>
       <div class="log-item">
         <strong>【<%= log.grade %>年<%= log.cls %>組 <%= log.name %> さん】</strong>
