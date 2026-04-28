@@ -176,7 +176,7 @@ input[type="submit"]:hover {
   flex-direction: column;
   align-items: center; /* コンテンツを中央揃え */
   padding: 20px;
-  margin: 10rem;
+  margin: 20rem;
   background-color: #f0f4f8;
   min-height: 100vh;
 }
