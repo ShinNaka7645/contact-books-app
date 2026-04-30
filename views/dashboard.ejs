@@ -8,11 +8,11 @@
 </head>
 <body class="dashboard-body">
   <% if(user.role === "学年主任") { %>
-    <h1><%= user.grade %>年主任 <%= user.name %></h1>
+    <h1><%= user.grade %>学年主任 <%= user.name %></h1>
   <% } else if(user.role === "担任") { %>
     <h1><%= user.grade %>年<%= user.cls %>組担任 <%= user.name %></h1>
   <% } else { %>
-    <h1><%= user.grade %>年<%= user.cls %>組 <%= user.name %></h1>
+    <h1><%= user.grade %>年<%= user.cls %>組<%= user.number %>番 <%= user.name %></h1>
   <% } %>
 
   <div class="calendar-section">
@@ -54,7 +54,7 @@
           <!-- 学年主任は生徒の学年・クラスも参照できる -->
           <% logs.forEach(log => { %>
               <div class="log-item">
-                <strong>【<%= log.grade %>年<%= log.cls %>組 <%= log.name %> さん】</strong>
+                <strong>【<%= log.grade %>年<%= log.cls %>組<%= log.number %>番 <%= log.name %>】</strong>
                 <p><strong>◎ 体調:</strong> <%= log.health %></p>
                 <p><strong>◎ メンタル:</strong> <%= log.mental %></p>
                 <strong>◎ 今日の振り返り・相談内容</strong>
@@ -65,7 +65,7 @@
         <!-- 生徒・担任は生徒名だけ参照可能 -->
         <% logs.forEach(log => { %>
           <div class="log-item">
-            <strong>【<%= log.name %> さん】</strong>
+            <strong>【出席番号:<%= log.number %>番 氏名:<%= log.name %>】</strong>
             <p><strong>◎ 体調:</strong> <%= log.health %></p>
             <p><strong>◎ メンタル:</strong> <%= log.mental %></p>
             <strong>◎ 今日の振り返り・相談内容</strong>
