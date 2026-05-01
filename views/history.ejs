@@ -8,12 +8,12 @@
 </head>
 <body class="history-body">
   <h2>連絡帳履歴</h2>
-  <% if(user.role !== "生徒" ) { %>
-    <% if(student_names.length > 0) { %>
+  <% if(user.role === "担任" ) { %>
+    <% if(students.length > 0) { %>
       <form action="/get-history" method="post">
         <p>生徒名で検索</p>
         <select name="studentName">
-          <% student_names.forEach(student =>{ %>
+          <% students.forEach(student =>{ %>
             <% if(student.name !== logs[0].name) { %>
               <option><%= student.name %></option>
             <% } else { %>
@@ -22,6 +22,25 @@
             <% } %>
           <% }) %>
         </select>
+        <button type="submit">検索</button>
+      </form>
+    <% } %>
+  <% } %>
+
+  <% if(user.role === "学年主任" ) { %>
+    <% if(students.length > 0) { %>
+      <form action="/get-history" method="post">
+        <p>クラス番号で検索<small>(<%= user.grade %>年〇組)</small></p>
+          <select name="studentCls">
+            <% students.forEach(student =>{ %>
+              <% if(student.cls !== logs[0].cls) { %>
+              <option><%= student.cls %></option>
+            <% } else { %>
+              <!-- 検索したクラス番号がデフォルトで選択される -->
+              <option selected><%= student.cls %></option>
+            <% } %>
+            <% }) %>
+          </select>
         <button type="submit">検索</button>
       </form>
     <% } %>

@@ -424,8 +424,9 @@ app.get("/history", (req, res) => {
       "SELECT * FROM contact_books WHERE grade = ? AND cls = ? ORDER BY id DESC";
     params = [user.grade, user.cls];
   } else if (user.role === "学年主任") {
-    // 生徒の名前を重複を削除して取得
-    sql = "SELECT DISTINCT name FROM contact_books WHERE grade = ?";
+    // クラス番号を重複を削除して取得(クラス番号は昇順に並べ替え)
+    sql =
+      "SELECT DISTINCT cls FROM contact_books WHERE grade = ? ORDER BY cls ASC";
     // 連絡帳の提出日が新しい順（idが降順）にデータを取得
     sql2 = "SELECT * FROM contact_books WHERE grade = ? ORDER BY id DESC";
     params = [user.grade];
@@ -433,14 +434,14 @@ app.get("/history", (req, res) => {
 
   // 3. connection.query を使って実行
   // fetchLogs でSQLを非同期処理
-  const fetchLogs = (names) => {
+  const fetchLogs = (students) => {
     connection.query(sql2, params, (err, results) => {
       if (err) {
         console.error("データ取得エラー:", err);
         return res.status(500).send("エラーが発生しました");
       }
       res.render("history.ejs", {
-        student_names: names,
+        students: students,
         logs: results,
       });
     });
@@ -459,7 +460,7 @@ app.get("/history", (req, res) => {
   }
 });
 
-// 生徒名で検索して履歴を絞り込む
+// 生徒名またはクラス番号で検索して履歴を絞り込む
 app.post("/get-history", (req, res) => {
   const user = res.locals.user;
 
@@ -467,38 +468,59 @@ app.post("/get-history", (req, res) => {
   let params = [];
 
   if (user.role === "担任") {
+    // 担任は生徒名を重複を削除して取得
     sql = "SELECT DISTINCT name FROM contact_books WHERE grade = ? AND cls = ?";
     params = [user.grade, user.cls];
   } else if (user.role === "学年主任") {
-    sql = "SELECT DISTINCT name FROM contact_books WHERE grade = ?";
+    // 学年主任はクラス番号を重複を削除して取得
+    sql =
+      "SELECT DISTINCT cls FROM contact_books WHERE grade = ? ORDER BY cls ASC";
     params = [user.grade];
   }
 
-  // 生徒名を重複を削除して取得
   connection.query(sql, params, (err, results) => {
     if (err) {
       console.error("データ取得エラー:", err);
       return res.status(500).send("エラーが発生しました");
     }
 
-    const student_names = results;
+    // 生徒たちのデータを取得
+    const students = results;
 
     // 連絡帳を提出日が新しい順に取得
-    connection.query(
-      "SELECT * FROM contact_books WHERE name = ? ORDER BY id DESC",
-      [req.body.studentName],
-      (err, logs) => {
-        if (err) {
-          console.error("データ取得エラー:", err);
-          return res.status(500).send("エラーが発生しました");
-        }
+    if (user.role === "担任") {
+      connection.query(
+        "SELECT * FROM contact_books WHERE name = ? ORDER BY id DESC",
+        [req.body.studentName],
+        (err, logs) => {
+          if (err) {
+            console.error("データ取得エラー:", err);
+            return res.status(500).send("エラーが発生しました");
+          }
 
-        res.render("history.ejs", {
-          student_names: student_names,
-          logs: logs,
-        });
-      },
-    );
+          res.render("history.ejs", {
+            students: students,
+            logs: logs,
+          });
+        },
+      );
+    } else if (user.role === "学年主任") {
+      connection.query(
+        "SELECT * FROM contact_books WHERE cls = ? ORDER BY id DESC",
+        [req.body.studentCls],
+        (err, logs) => {
+          if (err) {
+            console.error("データ取得エラー:", err);
+            return res.status(500).send("エラーが発生しました");
+          }
+
+          res.render("history.ejs", {
+            students: students,
+            logs: logs,
+          });
+        },
+      );
+    }
   });
 });
 
