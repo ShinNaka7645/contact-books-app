@@ -50,7 +50,7 @@
       <% if(logs.length > 0) { %>
       <% logs.forEach(log => { %>
         <div class="log-item">
-          <strong>【<%= log.grade %>年<%= log.cls %>組 <%= log.name %> さん】</strong>
+          <strong>【<%= log.grade %>年<%= log.cls %>組<%= log.number %>番 <%= log.name %> さん】</strong>
           <strong>★ 提出日: <%= new Date(log.date).toLocaleDateString('ja-JP') %></strong>
           <p><strong>◎ 体調:</strong> <%= log.health %></p>
           <p><strong>◎ メンタル:</strong> <%= log.mental %></p>
